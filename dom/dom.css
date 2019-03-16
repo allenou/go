@@ -1,0 +1,72 @@
+
+.checkerboard{
+    position: absolute;
+    left: 450px;
+    top:225px;
+    padding: 30px;
+    background-color: #f48e39;
+}
+.checkerboard ul{
+    width: 450px;
+    padding-left: 0;
+}
+.checkerboard li{
+    position: relative;
+    float: left;
+    list-style: none;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    border-radius: 50%;
+    
+}
+/* .checkerboard li:hover{
+    background-color: rgba(0,0,0,.4);
+} */
+
+.checkerboard li::before,.checkerboard li::after{
+   content: '';
+   position: absolute;
+   background-color: #000;
+}
+/* row */
+.checkerboard li::before{
+    top:50%;
+    width: 100%;
+    height: 1px;
+   
+}
+.checkerboard .left::before{
+    left: 50%;
+}
+
+.checkerboard .right::before{
+    width: 50%;
+}
+/* column */
+.checkerboard li::after{
+    height: 100%;
+    left: 50%;
+    width: 1px;
+}
+.checkerboard .top::after{
+    top:50%;
+   
+}
+.checkerboard .bottom::after{
+    height: 50%;
+}
+
+/* chess */
+.checkerboard li.chess::before,
+.checkerboard li.chess:after{
+    content: none;
+}
+
+
+.checkerboard li.black-chess{
+    background-color: #000;
+}
+.checkerboard li.white-chess{
+    background-color: #fff;
+}
