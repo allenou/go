@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" href="favicon.ico">
     <link rel="stylesheet" href="./dom/dom.css">
     <title>Go</title>
     <style>
@@ -14,19 +15,32 @@
             margin: 0;
         }
 
-        .black {
-            width: 100%;
+        .black,
+        .white {
+            float: left;
+            width: 50%;
             height: 50%;
+
+        }
+
+        .black {
             color: #fff;
             background-color: #000;
+        }
+
+        .white {
+            color: #000;
+            background-color: #fff;
         }
     </style>
 </head>
 
 <body>
 
-    <div class="black">BLACK</div>
-    <div class="white">WHITE</div>
+    <div class="black"></div>
+    <div class="white"></div>
+    <div class="white"></div>
+    <div class="black"></div>
     <script src="./dom/dom.js"></script>
 </body>
 
