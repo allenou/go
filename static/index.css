@@ -1,7 +1,12 @@
 .checkerboard-wrap{
     position: absolute;
-    left: 450px;
-    top:225px;
+    top:0;
+    left:0;
+    bottom:0;
+    right: 0;
+    width: 450px;
+    height: 450px;
+    margin: auto;
     padding: 30px;
     background-color: #f48e39;
 }
