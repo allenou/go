@@ -3,15 +3,14 @@
 var game = (function () {
     var config = {
         size: 15,
-        winer: '',
+        winner: '',
         record: [],
-        player: 'black'
+        player: 'white',
+        chessCount: [0, 0]
     }
     function drawCheckerboard() {
         var fragment = document.createDocumentFragment();
-        var checkerboard = document.createElement('div')
         var ul = document.createElement('ul')
-        checkerboard.className = 'checkerboard'
         for (var r = 0; r < config.size; r++) {
             config.record[r] = []
             for (var c = 0; c < config.size; c++) {
@@ -34,15 +33,27 @@ var game = (function () {
 
 
         }
-        checkerboard.appendChild(ul)
-        fragment.appendChild(checkerboard)
-        document.body.appendChild(fragment)
+        fragment.appendChild(ul)
+        document.querySelector('.checkerboard').appendChild(fragment)
     }
     function checkWin(count) {
         if (count === 5) {
-            config.winer = config.player
-            console.log('winer:' + config.winer)
+            config.winner = config.player
+            if (config.winner === 'black') {
+                var blackWinCount = +sessionStorage.getItem('blackWinCount') + 1
+                sessionStorage.setItem('blackWinCount', blackWinCount)
+                document.querySelector('.black-score').innerText = blackWinCount
+
+            } else {
+                var whiteWinCount = +sessionStorage.getItem('whiteWinCount') + 1
+                sessionStorage.setItem('whiteWinCount', whiteWinCount)
+                document.querySelector('.white-score').innerText = whiteWinCount
+            }
+            document.querySelector('.winner-wrap').style.zIndex = 11
+            document.querySelector('.winner-wrap p').innerText = config.winner.toUpperCase() + ' CHESS WIN'
         }
+
+
     }
     function checkChess(r, c, player) {
         var row, column
@@ -137,12 +148,36 @@ var game = (function () {
                     break;
                 }
             }
+
+
+            // 和棋
+            if (document.querySelectorAll('.chess').length === config.size * config.size && !config.winner) {
+                document.querySelector('.winner-wrap').style.zIndex = 11
+                document.querySelector('.winner-wrap p').innerText = 'DRAW'
+            }
+
         }
+    }
+
+    function restart() {
+        var btn = document.querySelector('.play-again')
+        btn.addEventListener('click', function () {
+            config.player = config.winner === 'black' ? 'white' : 'black' // 输者先行
+            config.winner = ''
+            config.record = []
+            config.chessCount = [0, 0]
+            document.querySelector('.checkerboard').innerHTML = ""
+            drawCheckerboard()
+            play()
+            document.querySelector('.winner-wrap').style.zIndex = -1
+            document.querySelector('.black-count').innerText = config.chessCount[0]
+            document.querySelector('.white-count').innerText = config.chessCount[1]
+        })
     }
     function play() {
         var ul = document.querySelector('ul')
         ul.addEventListener('click', function (e) {
-            if (!config.winer) {
+            if (!config.winner) {
                 var event = e || window.event
                 var chess = event.target
                 var player = config.player //current player
@@ -153,7 +188,21 @@ var game = (function () {
                     config.record[r][c] = player
                     chess.className += ' chess ' + player + '-chess'
                     checkChess(+r, +c, player)
-                    config.player = player === 'black' ? 'white' : 'black'
+
+                    if (player === 'black') {
+                        config.player = 'white'
+                        config.chessCount[0] += 1
+                        document.querySelector('.black-count').innerText = config.chessCount[0]
+                    } else {
+                        config.player = 'black'
+                        config.chessCount[1] += 1
+                        document.querySelector('.white-count').innerText = config.chessCount[1]
+                    }
+
+                    if (document.querySelector('.sound-control').className.indexOf('close-sound') === -1) {
+                        document.querySelector('.audio').play()
+                    }
+
                 }
             }
         })
@@ -162,6 +211,7 @@ var game = (function () {
         init: function () {
             drawCheckerboard()
             play()
+            restart()
         }
     }
 }())

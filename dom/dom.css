@@ -1,13 +1,42 @@
-
-.checkerboard{
+.checkerboard-wrap{
     position: absolute;
     left: 450px;
     top:225px;
     padding: 30px;
     background-color: #f48e39;
 }
+.winner-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    z-index: -1;
+    top:0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    text-align: center;
+    color: #fff;
+    background-color: rgba(0, 0, 0, .5);
+}
+
+.winner-wrap p{
+    margin-top: 0;
+    font-size: 30px;
+}
+.winner-wrap button{
+    border: none;
+    padding: 10px 30px;
+    font-size: 20px;
+    outline: none;
+    cursor: pointer;
+    color: #fff;
+    background-color: transparent;
+}
+
 .checkerboard ul{
     width: 450px;
+    margin: 0;
     padding-left: 0;
 }
 .checkerboard li{
@@ -70,3 +99,4 @@
 .checkerboard li.white-chess{
     background-color: #fff;
 }
+

@@ -32,16 +32,74 @@
             color: #000;
             background-color: #fff;
         }
+
+        .black-score,
+        .white-score,
+        .white-count,
+        .black-count {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 100px;
+            text-align: center;
+        }
+
+        .sound-wrap {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+        }
+
+        .sound-control {
+            width: 48px;
+            height: 48px;
+            cursor: pointer;
+            background: url('./assets/open.png') 48px 48px;
+        }
+
+        .close-sound {
+            background: url('./assets/close.png') 48px 48px;
+        }
     </style>
 </head>
 
 <body>
 
-    <div class="black"></div>
-    <div class="white"></div>
-    <div class="white"></div>
-    <div class="black"></div>
+    <div class="black black-score"></div>
+    <div class="white white-score"></div>
+    <div class="white white-count">0</div>
+    <div class="black black-count">0</div>
+
+    <div class="checkerboard-wrap">
+        <div class="checkerboard"></div>
+        <div class="winner-wrap">
+            <div class="winner-content">
+                <p></p>
+                <button class="play-again">PLAY AGAIN</button>
+            </div>
+        </div>
+    </div>
+    <div class="sound-wrap">
+        <div class="sound-control"></div>
+        <audio src="./assets/chess.mp3" class="audio"></audio>
+    </div>
+
     <script src="./dom/dom.js"></script>
+    <script>
+        window.onload = function () {
+            document.querySelector('.black-score').innerText = sessionStorage.getItem('blackWinCount') || 0
+            document.querySelector('.white-score').innerText = sessionStorage.getItem('whiteWinCount') || 0
+
+            var soundCtrl = document.querySelector('.sound-control')
+            soundCtrl.addEventListener('click', function () {
+                if (soundCtrl.className.indexOf('close-sound') === -1) {
+                    document.querySelector('.sound-control').className += ' close-sound'
+                } else {
+                    document.querySelector('.sound-control').className = 'sound-control'
+                }
+            })
+        }
+    </script>
 </body>
 
 </html>
